@@ -12,7 +12,7 @@ uniform int size = 32;
 uniform vec3 colors[2];
 
 void main(){
-    float total = floor(gl_FragCoord.x / size) + floor(gl_FragCoord.y / size);
+    float total = floor(gl_FragCoord.x / size / 2) + floor(gl_FragCoord.y / size / 2);
     bool isEven = mod(total, 2.0) == 0.0;
     frag_color = vec4(colors[isEven ? 0 : 1], 1.0);
 }
