@@ -10,7 +10,8 @@ out Varyings {
 uniform mat4 transform;
 
 void main(){
-    //TODO: (Req 7) Change the next line to apply the transformation matrix
-    gl_Position = vec4(position, 1.0);
+    //TODO: (Req 7) Change the next line to apply the transformation matrix to the position of the vertex
+    gl_Position = transform * vec4(position, 1.0);
+    // gl_Position = vec4(position, 1.0);
     vs_out.color = color;
 }
