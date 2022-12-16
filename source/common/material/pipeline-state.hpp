@@ -77,8 +77,8 @@ namespace our {
                 glDisable(GL_BLEND);
             }
 
-            glColorMask(colorMask.r, colorMask.g, colorMask.b, colorMask.a);
             glDepthMask(depthMask);
+            glColorMask(colorMask.r, colorMask.g, colorMask.b, colorMask.a);
 
         }
 
