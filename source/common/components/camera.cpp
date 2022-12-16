@@ -34,12 +34,18 @@ namespace our {
         // - the eye position which is the point (0,0,0) but after being transformed by M
         // - the center position which is the point (0,0,-1) but after being transformed by M
         // - the up direction which is the vector (0,1,0) but after being transformed by M
-        // then you can use glm::lookAt
-        glm::vec4 eye(0.0f, 0.0f, 0.0f, 1.0f);
-        glm::vec4 center(0.0f, 0.0f, -1.0f, 1.0f);
-        glm::vec4 up(0.0f, 1.0f, 0.0f, 0.0f);
-        return glm::lookAt(glm::vec3(M * eye), glm::vec3(M * center), glm::vec3(M * up));
+        // then you can use glm::lookAt to compute the view matrix
+        // NOTE: glm::lookAt takes the eye position, the center position and the up direction
+        glm::vec3 eye = glm::vec3(0.0f);
+        glm::vec3 center = glm::vec3(0.0f, 0.0f, -1.0f);
+        glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
 
+        eye = glm::vec3(M * glm::vec4(eye, 1.0f));
+        center = glm::vec3(M * glm::vec4(center, 1.0f));
+        up = glm::vec3(M * glm::vec4(up, 0.0f));
+
+        return glm::lookAt(eye, center, up);
+        // return glm::mat4(1.0f);
     }
 
     // Creates and returns the camera projection matrix
@@ -50,14 +56,18 @@ namespace our {
         // It takes left, right, bottom, top. Bottom is -orthoHeight/2 and Top is orthoHeight/2.
         // Left and Right are the same but after being multiplied by the aspect ratio
         // For the perspective camera, you can use glm::perspective
-        // It takes fovY, aspect ratio, near and far
-        float aspect_ratio = static_cast<float>(viewportSize.x) / viewportSize.y;
-        if (cameraType == CameraType::ORTHOGRAPHIC) {
-            // Get the orthographic matrix given the orthoHeight and the aspect ratio
-            return glm::ortho(-(orthoHeight / 2) * aspect_ratio, (orthoHeight / 2) * aspect_ratio, -orthoHeight / 2, orthoHeight / 2); 
+        // It takes the field of view, the aspect ratio and the near and far planes
+
+        if(cameraType == CameraType::ORTHOGRAPHIC){
+            float aspectRatio = viewportSize.x / (float)viewportSize.y;
+            float left = -orthoHeight * aspectRatio / 2.0f;
+            float right = orthoHeight * aspectRatio / 2.0f;
+            float bottom = -orthoHeight / 2.0f;
+            float top = orthoHeight / 2.0f;
+            return glm::ortho(left, right, bottom, top, near, far);
+        } else {
+            float aspectRatio = viewportSize.x / (float)viewportSize.y;
+            return glm::perspective(fovY, aspectRatio, near, far);
         }
-        // if perspective use the fov, aspect ratio, near and far planes
-        // if the far plane is infintly far, Z fighting will occur
-        return glm::perspective(fovY, aspect_ratio, near, far);  
     }
 }
