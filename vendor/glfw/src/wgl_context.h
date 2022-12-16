@@ -104,6 +104,10 @@ typedef BOOL (WINAPI * PFN_wglShareLists)(HGLRC,HGLRC);
 #define wglMakeCurrent _glfw.wgl.MakeCurrent
 #define wglShareLists _glfw.wgl.ShareLists
 
+#define _GLFW_RECREATION_NOT_NEEDED 0
+#define _GLFW_RECREATION_REQUIRED   1
+#define _GLFW_RECREATION_IMPOSSIBLE 2
+
 #define _GLFW_PLATFORM_CONTEXT_STATE            _GLFWcontextWGL wgl
 #define _GLFW_PLATFORM_LIBRARY_CONTEXT_STATE    _GLFWlibraryWGL wgl
 
@@ -115,6 +119,7 @@ typedef struct _GLFWcontextWGL
     HDC       dc;
     HGLRC     handle;
     int       interval;
+
 } _GLFWcontextWGL;
 
 // WGL-specific global data
@@ -147,6 +152,7 @@ typedef struct _GLFWlibraryWGL
     GLFWbool                            ARB_create_context_robustness;
     GLFWbool                            ARB_create_context_no_error;
     GLFWbool                            ARB_context_flush_control;
+
 } _GLFWlibraryWGL;
 
 
