@@ -30,4 +30,6 @@ void main(){
 
     //write the final color
     frag_color = vec4(red, green, blue, 1.0);
+
+    frag_color = texture(tex, tex_coord);
 }

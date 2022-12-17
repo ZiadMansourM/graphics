@@ -29,6 +29,7 @@ namespace our {
             skyPipelineState.depthTesting.enabled = true;
             skyPipelineState.depthTesting.function = GL_LEQUAL;
             skyPipelineState.faceCulling.enabled = true;
+            skyPipelineState.faceCulling.frontFace = GL_CCW;
             skyPipelineState.faceCulling.culledFace = GL_FRONT;
 
             // Load the sky texture (note that we don't need mipmaps since we want to avoid any unnecessary blurring while rendering the sky)
@@ -233,10 +234,17 @@ namespace our {
             // HINT: the sky sphere is a unit sphere, so you can use the camera position as the center
 
             //matrix that follow cameraPosition after projection is applied
-            glm::mat4 modelMatrix = cameraPosition * camera->getViewMatrix();
 
+            //create an identity matrix and 4*4 matrix
+            // glm::mat4 cameraPositionIdentity = glm::mat4(
+            //     1.0f, 0.0f, 0.0f, 0.0f,
+            //     0.0f, 1.0f, 0.0f, 0.0f,
+            //     0.0f, 0.0f, 1.0f, 0.0f,
+            //     cameraPosition.x, cameraPosition.y,cameraPosition.z, 1.0f
+            // );
+            
 
-
+            glm::mat4 modelMatrix =   camera->getProjectionMatrix(windowSize) * camera->getViewMatrix() * cameraPosition;
 
             //TODO: (Req 10) We want the sky to be drawn behind everything (in NDC space, z=1)
             // We can acheive the is by multiplying by an extra matrix after the projection but what values should we put in it?
@@ -245,15 +253,13 @@ namespace our {
             // glm::mat4 alwaysBehindTransform = glm::mat4(1.0f);
             // alwaysBehindTransform[2][2] = 0.0f;
             // alwaysBehindTransform[3][2] = 1.0f;
-
-
-            glm::mat4 alwaysBehindTransform = glm::mat4(
+           
+             glm::mat4 alwaysBehindTransform = glm::mat4(
                 1.0f, 0.0f, 0.0f, 0.0f,
                 0.0f, 1.0f, 0.0f, 0.0f,
-                0.0f, 0.0f, 0.0f, 1.0f,
-                0.0f, 0.0f, 0.0f, 1.0f
+                0.0f, 0.0f, 0.0f, 0.0f,
+                0.0f, 0.0f, 1.0f, 1.0f
             );
-
             //TODO: (Req 10) set the "transform" uniform
 
             //set the "transform" uniform
