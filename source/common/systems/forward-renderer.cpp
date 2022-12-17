@@ -65,27 +65,26 @@ namespace our {
             // Hints: The color format can be (Red, Green, Blue and Alpha components with 8 bits for each channel).
             // The depth format can be (Depth component with 24 bits).
 
-            colorTarget = texture_utils::empty(GL_RGBA, windowSize);
 
-            // GLuint mip_levels = (GLuint)glm::floor(glm::log2(glm::max<float>((float)windowSize.x, (float)windowSize.y))) + 1;
-            // glTexStorage2D(GL_TEXTURE_2D, mip_levels, GL_RGBA8, windowSize.x, windowSize.y);
+            // colorTarget = texture_utils::empty(mip_levels, windowSize);
+            colorTarget = new Texture2D();
+            colorTarget->bind();
+            GLuint mip_levels = (GLuint)glm::floor(glm::log2(glm::max<float>((float)windowSize.x, (float)windowSize.y))) + 1;
+            glTexStorage2D(GL_TEXTURE_2D, mip_levels, GL_RGBA8, windowSize.x, windowSize.y);
             // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, windowSize.x, windowSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
             glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTarget->getOpenGLName(), 0);
 
-
             // depthTarget = texture_utils::empty(1, windowSize);
-            // depthTarget = new Texture2D();
-            depthTarget = texture_utils::empty(GL_DEPTH_COMPONENT, windowSize);
-
+            depthTarget = new Texture2D();
+            depthTarget->bind();
             // depthTarget->bind();
-            // glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT24, windowSize.x, windowSize.y);
+            glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT24, windowSize.x, windowSize.y);
             glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTarget->getOpenGLName(), 0);
 
-
-            if (glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-            {
-                std::cerr << "Framebuffer is not complete!" << std::endl;
-            }
+            // if (glCheckFramebufferStatus(GL_DRAW_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+            // {
+            //     std::cerr << "Framebuffer is not complete!" << std::endl;
+            // }
             //TODO: (Req 11) Unbind the framebuffer just to be safe
             glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
@@ -201,7 +200,6 @@ namespace our {
         {
             //TODO: (Req 11) bind the framebuffer
             glBindFramebuffer(GL_DRAW_FRAMEBUFFER, postprocessFrameBuffer);
-
         }
 
         //TODO: (Req 9) Clear the color and depth buffers
@@ -246,14 +244,14 @@ namespace our {
             //     0.0f, 0.0f, 1.0f, 0.0f,
             //     cameraPosition.x, cameraPosition.y,cameraPosition.z, 1.0f
             // );
+            
 
-
-            glm::mat4 modelMatrix = VP * cameraPosition;
+            glm::mat4 modelMatrix =   VP * cameraPosition;
 
             //TODO: (Req 10) We want the sky to be drawn behind everything (in NDC space, z=1)
             // We can acheive the is by multiplying by an extra matrix after the projection but what values should we put in it?
-
-            glm::mat4 alwaysBehindTransform = glm::mat4(
+           
+             glm::mat4 alwaysBehindTransform = glm::mat4(
                 1.0f, 0.0f, 0.0f, 0.0f,
                 0.0f, 1.0f, 0.0f, 0.0f,
                 0.0f, 0.0f, 0.0f, 0.0f,
@@ -287,16 +285,22 @@ namespace our {
         if (postprocessMaterial)
         {
             //TODO: (Req 11) Return to the default framebuffer
-            // unbind the framebuffer
-
             glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+            // unbind the framebuffer
 
             //TODO: (Req 11) Setup the postprocess material and draw the fullscreen triangle
 
-            // setup postprocessMaterial
+            //setup postprocessMaterial
             postprocessMaterial->setup();
+            // glDisable(GL_DEPTH_TEST);
             glBindVertexArray(postProcessVertexArray);
-            glDrawArrays(GL_TRIANGLES, 0, 3);
+            // colorTarget->bind();
+            glDrawArrays(GL_TRIANGLES, GLint(0), GLsizei(3));
+            // postprocessMaterial->setup();
+            // // glBindVertexArray(postProcessVertexArray);
+            // glDisable(GL_DEPTH_TEST);
+            // colorTarget->bind();
+            // glDrawArrays(GL_TRIANGLES, 0, 6);
             glBindVertexArray(0);
         }
     }
