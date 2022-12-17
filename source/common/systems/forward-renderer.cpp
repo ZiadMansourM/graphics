@@ -66,8 +66,8 @@ namespace our {
             // The depth format can be (Depth component with 24 bits).
 
 
-            // colorTarget = texture_utils::empty(mip_levels, windowSize);
-            colorTarget = new Texture2D();
+            colorTarget = texture_utils::empty(GL_RGBA8, windowSize);
+            // colorTarget = new Texture2D();
             colorTarget->bind();
             GLuint mip_levels = (GLuint)glm::floor(glm::log2(glm::max<float>((float)windowSize.x, (float)windowSize.y))) + 1;
             glTexStorage2D(GL_TEXTURE_2D, mip_levels, GL_RGBA8, windowSize.x, windowSize.y);
@@ -75,7 +75,8 @@ namespace our {
             glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colorTarget->getOpenGLName(), 0);
 
             // depthTarget = texture_utils::empty(1, windowSize);
-            depthTarget = new Texture2D();
+            // depthTarget = new Texture2D();
+            depthTarget = texture_utils::empty(GL_DEPTH_COMPONENT24, windowSize);
             depthTarget->bind();
             // depthTarget->bind();
             glTexStorage2D(GL_TEXTURE_2D, 1, GL_DEPTH_COMPONENT24, windowSize.x, windowSize.y);
@@ -244,14 +245,14 @@ namespace our {
             //     0.0f, 0.0f, 1.0f, 0.0f,
             //     cameraPosition.x, cameraPosition.y,cameraPosition.z, 1.0f
             // );
-            
 
-            glm::mat4 modelMatrix =   VP * cameraPosition;
+
+            glm::mat4 modelMatrix = VP * cameraPosition;
 
             //TODO: (Req 10) We want the sky to be drawn behind everything (in NDC space, z=1)
             // We can acheive the is by multiplying by an extra matrix after the projection but what values should we put in it?
-           
-             glm::mat4 alwaysBehindTransform = glm::mat4(
+
+            glm::mat4 alwaysBehindTransform = glm::mat4(
                 1.0f, 0.0f, 0.0f, 0.0f,
                 0.0f, 1.0f, 0.0f, 0.0f,
                 0.0f, 0.0f, 0.0f, 0.0f,
@@ -288,13 +289,15 @@ namespace our {
             // glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
             // unbind the framebuffer
 
+            glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
             //TODO: (Req 11) Setup the postprocess material and draw the fullscreen triangle
 
-            //setup postprocessMaterial
+            // setup postprocessMaterial
             postprocessMaterial->setup();
-            // glBindVertexArray(postProcessVertexArray);
-            // glDisable(GL_DEPTH_TEST);
-            // colorTarget->bind();
+            glBindVertexArray(postProcessVertexArray);
+            glDisable(GL_DEPTH_TEST);
+            colorTarget->bind();
             glDrawArrays(GL_TRIANGLES, GLint(0), GLsizei(3));
 
         }

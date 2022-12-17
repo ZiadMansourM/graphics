@@ -19,7 +19,11 @@ void main(){
     // while the texture coordinate space ranges from 0 to 1
     // We have the pixel's texture coordinate, how can we compute its location in the NDC space?
 
-    vec4 color = texture(tex, tex_coord) / (1.0 + pow(length(tex_coord * 2.0 - 1.0), 2.0));
+    // vec4 color = texture(tex, tex_coord) / (1.0 + pow(length(tex_coord * 2.0 - 1.0), 2.0));
+    vec4 color = texture(tex, tex_coord) / (1.0 + glm::dot(tex_coord * 2.0 - 1.0, tex_coord * 2.0 - 1.0));
+
+
+    
     //set the fragment color to the color
     frag_color = color;
     // frag_color = texture(tex, tex_coord);    

@@ -29,7 +29,9 @@ void main(){
     float blue = texture(tex, tex_coord + vec2(STRENGTH, 0)).b;
 
     //write the final color
-    frag_color = vec4(red, green, blue, texture(tex,tex_coord).a);
+    // frag_color = vec4(red, green, blue, texture(tex,tex_coord).a);
+    frag_color = vec4(red, green, blue, 1.0f);
+
 
     // frag_color = texture(tex, tex_coord);
 }
