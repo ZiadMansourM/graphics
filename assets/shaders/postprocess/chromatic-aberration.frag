@@ -15,6 +15,11 @@ out vec4 frag_color;
 // differently based on its wavelength. In this shader, we will implement a
 // cheap version of that effect 
 
+// The effect is achieved by sampling the red and blue channels from pixels
+// that are slightly to the left and right of the current pixel. The green
+// channel is sampled from the current pixel.
+
+
 void main(){
     //TODO: Modify this shader to apply chromatic abberation
     // To apply this effect, we only read the green channel from the correct pixel (as defined by tex_coord)
@@ -24,8 +29,12 @@ void main(){
     //read the green channel from the correct pixel
     float green = texture(tex, tex_coord).g;
     //move by amount STRENGTH to the left then sample another pixel from which we take the red channel
+    //Q: why did we do move the by anmount strength to the left?
+    //A: because we want to sample the pixel to the left of the current pixel
     float red = texture(tex, tex_coord - vec2(STRENGTH, 0)).r;
     //move by amount STRENGTH to the right then sample another pixel from which we take the blue channel
+    //Q: why did we do move the by anmount strength to the right?
+    //A: because we want to sample the pixel to the right of the current pixel
     float blue = texture(tex, tex_coord + vec2(STRENGTH, 0)).b;
 
     //write the final color

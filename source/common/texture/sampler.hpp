@@ -15,6 +15,8 @@ namespace our {
         Sampler() {
             //TODO: (Req 6) Complete this function
             glGenSamplers(1, &name);
+            // 1 states the number of samplers to create 
+            // name is the address of the first sampler name to create
         };
 
         // This deconstructor deletes the underlying OpenGL sampler

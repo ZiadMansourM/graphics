@@ -58,7 +58,8 @@ namespace our {
 
         // 3. Bind the texture and sampler to a texture unit and send the unit number to the uniform variable "tex"
         texture->bind();
-        sampler->bind(0);
+        if(sampler != nullptr)
+            sampler->bind(0);
         shader->set("tex", 0);
     }
 
