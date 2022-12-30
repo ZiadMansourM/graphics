@@ -135,6 +135,9 @@
           },
           {
             "type": "Free Camera Controller"
+          },
+          {
+            "type": "Player Controller"
           }
         ],
         "children": [

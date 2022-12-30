@@ -80,6 +80,8 @@ set(COMMON_SOURCES
         source/common/components/component-deserializer.hpp
         source/common/components/collider.cpp
         source/common/components/collider.hpp
+        source/common/components/player-controller.cpp
+        source/common/components/player-controller.hpp
 
         source/common/systems/forward-renderer.hpp
         source/common/systems/forward-renderer.cpp

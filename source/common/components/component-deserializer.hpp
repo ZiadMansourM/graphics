@@ -6,6 +6,7 @@
 #include "free-camera-controller.hpp"
 #include "movement.hpp"
 #include "collider.hpp"
+#include "player-controller.hpp"
 #include<iostream>
 
 namespace our {
@@ -48,6 +49,11 @@ namespace our {
             component = entity->addComponent<ColliderComponent>();
             // std::cout << "After call" << std::endl;
 
+        }
+        else if (type == PlayerControllerComponent::getID())
+        {
+            std::cout << "Player Controller" << std::endl;
+            component = entity->addComponent<PlayerControllerComponent>();
         }
 
         // else if (type == LightComponent::getID())
