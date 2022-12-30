@@ -5,6 +5,8 @@
 #include "mesh-renderer.hpp"
 #include "free-camera-controller.hpp"
 #include "movement.hpp"
+#include "collider.hpp"
+#include<iostream>
 
 namespace our {
 
@@ -17,6 +19,7 @@ namespace our {
         //TODO: (Req 8) Add an option to deserialize a "MeshRendererComponent" to the following if-else statement.
         if (type == CameraComponent::getID())
         {
+
             component = entity->addComponent<CameraComponent>();
         }
         else if (type == FreeCameraControllerComponent::getID())
@@ -25,12 +28,28 @@ namespace our {
         }
         else if (type == MovementComponent::getID())
         {
+            // glm::vec3 linearVelocity = { 0, 0, 0 };
+            // std::cout << "MovementComponent exists" << std::endl;
+            // std::cout << entity << std::endl;
+            // std::cout << data.is_object() << std::endl;
+            // std::cout << data.value("type", "") << std::endl;
+            // linearVelocity = data.value("linearVelocity", linearVelocity);
+            // std::cout << linearVelocity.x << std::endl;
             component = entity->addComponent<MovementComponent>();
         }
         else if (type == MeshRendererComponent::getID())
         {
             component = entity->addComponent<MeshRendererComponent>();
         }
+        else if (type == ColliderComponent::getID())
+        {
+
+            // std::cout << "Before call" << std::endl;
+            component = entity->addComponent<ColliderComponent>();
+            // std::cout << "After call" << std::endl;
+
+        }
+
         // else if (type == LightComponent::getID())
         // {
         //     component = entity->addComponent<LightComponent>();
