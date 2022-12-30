@@ -173,8 +173,26 @@
             // "shape": "box",
             // "size": [1, 1, 1],
             // "isTrigger": true
-            "colliderCenter": [69, 0, 0],
-            "radius": 1.0
+            "colliderCenter": [0, 0, 0],
+            "radius": 2.0
+          }
+        ]
+      },
+      {
+        "position": [5, 0, 3],
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "sphere",
+            "material": "glass"
+          },
+          {
+            "type": "Collider",
+            // "shape": "box",
+            // "size": [1, 1, 1],
+            // "isTrigger": true
+            "colliderCenter": [0, 0, 0],
+            "radius": 2.0
           }
         ]
       },
