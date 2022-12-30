@@ -52,7 +52,7 @@ namespace our {
         }
         else if (type == PlayerControllerComponent::getID())
         {
-            std::cout << "Player Controller" << std::endl;
+            //std::cout << "Player Controller" << std::endl;
             component = entity->addComponent<PlayerControllerComponent>();
         }
 
