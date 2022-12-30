@@ -14,6 +14,7 @@
 namespace our
 {
 
+    int jumpDistance = 0; // 0 means not jumping & 30 means jumping with height of 30
     // The free camera controller system is responsible for moving every entity which contains a FreeCameraControllerComponent.
     // This system is added as a slightly complex example for how use the ECS framework to implement logic. 
     // For more information, see "common/components/free-camera-controller.hpp"
@@ -111,9 +112,35 @@ namespace our
             if (app->getKeyboard().isPressed(GLFW_KEY_D)) position += right * (deltaTime * current_sensitivity.x);
             if (app->getKeyboard().isPressed(GLFW_KEY_A)) position -= right * (deltaTime * current_sensitivity.x);
             //Space moves the player up
-            if (app->getKeyboard().isPressed(GLFW_KEY_SPACE)) position += up * (deltaTime * current_sensitivity.y);
-            //Gravity
-            if (position.y >= 1.5) position -= up * (deltaTime * current_sensitivity.y);
+            // if (app->getKeyboard().isPressed(GLFW_KEY_SPACE)) position += up * (deltaTime * current_sensitivity.y);
+            // //Gravity
+            // if (position.y >= 1.5) position -= up * (deltaTime * current_sensitivity.y);
+            // if(app->getKeyboard().isPressed(GLFW_KEY_D)) position += right * (deltaTime * current_sensitivity.x);
+            // if(app->getKeyboard().isPressed(GLFW_KEY_A)) position -= right * (deltaTime * current_sensitivity.x);
+
+            // space means the player jumps up by a certain amount of units
+            if (app->getKeyboard().isPressed(GLFW_KEY_SPACE) && position.y <= 10) {
+                // update position.y to add 30 units
+                position.y += 1;
+                // update the jumpDistance to 30 units
+                jumpDistance = 1;
+            }
+
+            // // if the player jumpDistance is not equal 0 , gradually decrease the distance by one
+            // if (jumpDistance != 0) {
+            //     jumpDistance --;
+            //     // check if the jumpDistance reachec value 0, if so, set the position.y to 0
+            //     if (jumpDistance == 0) {
+            //         position.y -= 5;
+            //     }
+            // }
+
+            // the player goes down if the space key is not pressed and stops when the player reaches the ground
+            if (!app->getKeyboard().isPressed(GLFW_KEY_SPACE) && position.y > 0) {
+                position.y -= 1;
+            }
+            
+
         }
 
         // When the state exits, it should call this function to ensure the mouse is unlocked
