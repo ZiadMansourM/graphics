@@ -31,7 +31,7 @@ namespace our
         }
 
         // This should be called every frame to update all entities containing a FreeCameraControllerComponent 
-        void update(World* world, float deltaTime)
+        bool update(World* world, float deltaTime)
         {
             // First of all, we search for an entity containing both a CameraComponent and a FreeCameraControllerComponent
             // As soon as we find one, we break
@@ -44,7 +44,7 @@ namespace our
                 if (camera && controller) break;
             }
             // If there is no entity with both a CameraComponent and a FreeCameraControllerComponent, we can do nothing so we return
-            if (!(camera && controller)) return;
+            if (!(camera && controller)) return false;
             // Get the entity that we found via getOwner of camera (we could use controller->getOwner())
             Entity* entity = camera->getOwner();
 
@@ -191,6 +191,7 @@ namespace our
                 position.y -= 1;
             }
 
+            return detectExit(world, position);
 
         }
 
@@ -263,6 +264,17 @@ namespace our
                     }
                 }
 
+            }
+            return false;
+        }
+
+
+        bool detectExit(World* world, glm::vec3 position)
+        {
+            // std::cout << "Position: " << position.x << " " << position.y << " " << position.z << std::endl;
+            if (glm::abs(position.x - 38) < 2 && glm::abs(position.z + 183) < 2)
+            {
+                return true;
             }
             return false;
         }

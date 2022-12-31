@@ -6,8 +6,6 @@
 #include <systems/forward-renderer.hpp>
 #include <systems/free-camera-controller.hpp>
 #include <systems/movement.hpp>
-#include <systems/collider.hpp>
-#include<systems/player-controller.hpp>
 #include <asset-loader.hpp>
 
 // This state shows how to use the ECS framework and deserialization.
@@ -17,8 +15,6 @@ class Playstate: public our::State {
     our::ForwardRenderer renderer;
     our::FreeCameraControllerSystem cameraController;
     our::MovementSystem movementSystem;
-    our::ColliderSystem colliderSystem;
-    our::PlayerControllerSystem playerControllerSystem;
 
     void onInitialize() override
     {
@@ -45,16 +41,14 @@ class Playstate: public our::State {
     {
         // Here, we just run a bunch of systems to control the world logic
         movementSystem.update(&world, (float)deltaTime);
-        cameraController.update(&world, (float)deltaTime);
-        colliderSystem.update(&world, (float)deltaTime);
-        playerControllerSystem.update(&world, (float)deltaTime);
+        bool gameOver = cameraController.update(&world, (float)deltaTime);
         // And finally we use the renderer system to draw the scene
         renderer.render(&world);
 
         // Get a reference to the keyboard object
         auto& keyboard = getApp()->getKeyboard();
 
-        if (keyboard.justPressed(GLFW_KEY_ESCAPE))
+        if (keyboard.justPressed(GLFW_KEY_ESCAPE) || gameOver)
         {
             // If the escape  key is pressed in this frame, go to the play state
             getApp()->changeState("menu");

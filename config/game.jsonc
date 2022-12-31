@@ -429,7 +429,7 @@
       {
         "position": [38, 0, -190], //Door
         "rotation": [0, 0, 0],
-        "scale": [11, 10, 2],
+        "scale": [11, 9.8, 2],
         "components": [
           {
             "type": "Mesh Renderer",
