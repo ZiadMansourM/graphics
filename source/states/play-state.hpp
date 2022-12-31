@@ -41,14 +41,14 @@ class Playstate: public our::State {
     {
         // Here, we just run a bunch of systems to control the world logic
         movementSystem.update(&world, (float)deltaTime);
-        cameraController.update(&world, (float)deltaTime);
+        bool gameOver = cameraController.update(&world, (float)deltaTime);
         // And finally we use the renderer system to draw the scene
         renderer.render(&world);
 
         // Get a reference to the keyboard object
         auto& keyboard = getApp()->getKeyboard();
 
-        if (keyboard.justPressed(GLFW_KEY_ESCAPE))
+        if (keyboard.justPressed(GLFW_KEY_ESCAPE) || gameOver)
         {
             // If the escape  key is pressed in this frame, go to the play state
             getApp()->changeState("menu");
