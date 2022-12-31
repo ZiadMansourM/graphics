@@ -29,13 +29,6 @@ namespace our {
         }
         else if (type == MovementComponent::getID())
         {
-            // glm::vec3 linearVelocity = { 0, 0, 0 };
-            // std::cout << "MovementComponent exists" << std::endl;
-            // std::cout << entity << std::endl;
-            // std::cout << data.is_object() << std::endl;
-            // std::cout << data.value("type", "") << std::endl;
-            // linearVelocity = data.value("linearVelocity", linearVelocity);
-            // std::cout << linearVelocity.x << std::endl;
             component = entity->addComponent<MovementComponent>();
         }
         else if (type == MeshRendererComponent::getID())
@@ -44,15 +37,10 @@ namespace our {
         }
         else if (type == ColliderComponent::getID())
         {
-
-            // std::cout << "Before call" << std::endl;
             component = entity->addComponent<ColliderComponent>();
-            // std::cout << "After call" << std::endl;
-
         }
         else if (type == PlayerControllerComponent::getID())
         {
-            //std::cout << "Player Controller" << std::endl;
             component = entity->addComponent<PlayerControllerComponent>();
         }
 

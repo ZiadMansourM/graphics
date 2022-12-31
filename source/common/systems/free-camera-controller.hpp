@@ -3,6 +3,7 @@
 #include "../ecs/world.hpp"
 #include "../components/camera.hpp"
 #include "../components/free-camera-controller.hpp"
+#include "../components/collider.hpp"
 
 #include "../application.hpp"
 
@@ -10,7 +11,7 @@
 #include <glm/gtc/constants.hpp>
 #include <glm/trigonometric.hpp>
 #include <glm/gtx/fast_trigonometry.hpp>
-
+#include<iostream>
 namespace our
 {
 
@@ -47,6 +48,7 @@ namespace our
             // Get the entity that we found via getOwner of camera (we could use controller->getOwner())
             Entity* entity = camera->getOwner();
 
+
             // If the left mouse button is pressed, we lock and hide the mouse. This common in First Person Games.
             if (app->getMouse().isPressed(GLFW_MOUSE_BUTTON_1) && !mouse_locked)
             {
@@ -63,6 +65,7 @@ namespace our
             // We get a reference to the entity's position and rotation
             glm::vec3& position = entity->localTransform.position;
             glm::vec3& rotation = entity->localTransform.rotation;
+
 
             // If the left mouse button is pressed, we get the change in the mouse location
             // and use it to update the camera rotation
@@ -100,11 +103,31 @@ namespace our
             // S & W moves the player back and forth
             if (app->getKeyboard().isPressed(GLFW_KEY_W))
             {
-                glm::vec3 frontVec = front * (deltaTime * current_sensitivity.z);
-                glm::vec3 posChange = { front.x, 0.0, front.z };
+                glm::vec3 frontVec = front * (deltaTime * current_sensitivity.x);
+                glm::vec3 posChange = { frontVec.x, 0.0, frontVec.z };
                 position += posChange;
+
+                bool collide = detectCollision(world, position);
+                if (collide)
+                {
+                    //Undo collision
+                    position -= posChange;
+                    std::cout << "COLLISION" << std::endl;
+                }
+
+
             }
-            if (app->getKeyboard().isPressed(GLFW_KEY_S)) position -= front * (deltaTime * current_sensitivity.z);
+            if (app->getKeyboard().isPressed(GLFW_KEY_S))
+            {
+                glm::vec3 frontVec = -front * (deltaTime * current_sensitivity.z);
+                glm::vec3 posChange = { frontVec.x, 0.0, frontVec.z };
+                position += posChange;
+                bool collide = detectCollision(world, position);
+                if (collide)
+                {
+                    position -= posChange;
+                }
+            }
             // Q & E moves the player up and down
             // if(app->getKeyboard().isPressed(GLFW_KEY_Q)) position += up * (deltaTime * current_sensitivity.y);
             // if(app->getKeyboard().isPressed(GLFW_KEY_E)) position -= up * (deltaTime * current_sensitivity.y);
@@ -119,9 +142,15 @@ namespace our
             // if(app->getKeyboard().isPressed(GLFW_KEY_A)) position -= right * (deltaTime * current_sensitivity.x);
 
             // space means the player jumps up by a certain amount of units
-            if (app->getKeyboard().isPressed(GLFW_KEY_SPACE) && position.y <= 10) {
+            if (app->getKeyboard().isPressed(GLFW_KEY_SPACE) && position.y <= 10)
+            {
                 // update position.y to add 30 units
                 position.y += 1;
+                bool collide = detectCollision(world, position);
+                if (collide)
+                {
+                    position.y -= 1;
+                }
                 // update the jumpDistance to 30 units
                 jumpDistance = 1;
             }
@@ -136,10 +165,11 @@ namespace our
             // }
 
             // the player goes down if the space key is not pressed and stops when the player reaches the ground
-            if (!app->getKeyboard().isPressed(GLFW_KEY_SPACE) && position.y > 0) {
+            if (!app->getKeyboard().isPressed(GLFW_KEY_SPACE) && position.y > 0)
+            {
                 position.y -= 1;
             }
-            
+
 
         }
 
@@ -153,6 +183,67 @@ namespace our
             }
         }
 
-    };
 
+        bool detectCollision(World* world, glm::vec3 position)
+        {
+            //------------------------------------------BEGIN COLLISION----------------------
+
+            bool collide = false;
+            //Search for other entity having a collider component
+            Entity* other = nullptr;
+            ColliderComponent* collider = nullptr;
+            for (auto entity : world->getEntities())
+            {
+                // Get the collider component if it exists
+                collider = entity->getComponent<ColliderComponent>();
+                // If the collider component exists
+                if (collider)
+                {
+                    other = collider->getOwner();
+
+                    //Get position of other entity
+                    glm::vec3 otherPosition = other->localTransform.position;
+                    glm::vec3 otherSize = collider->size;
+                    //Detect collisions
+
+                    bool collideX = false;
+                    bool collideY = false;
+                    bool collideZ = false;
+
+                    float absX = glm::abs(position.x - otherPosition.x);
+                    float absY = glm::abs(position.y - otherPosition.y);
+                    float absZ = glm::abs(position.z - otherPosition.z);
+
+                    if (absX < otherSize.x)
+                    {
+                        collideX = true;
+                    }
+                    if (absY < otherSize.y)
+                    {
+                        collideY = true;
+                    }
+                    if (absZ < otherSize.z)
+                    {
+                        collideZ = true;
+                    }
+                    collide = collideX && collideY && collideZ;
+
+                    std::cout << "My pos: " << position.x << " " << position.y << " " << position.z << std::endl;
+                    std::cout << "Other pos: " << otherPosition.x << " " << otherPosition.y << " " << otherPosition.z << std::endl;
+                    std::cout << "Diff: " << absX << " " << absY << " " << absZ << std::endl;
+                    std::cout << "Other size: " << otherSize.x << " " << otherSize.y << " " << otherSize.z << std::endl;
+                    float dist = glm::length(otherPosition - position);
+                    std::cout << dist << " " << collide << std::endl;
+                    std::cout << "----------------------------" << std::endl;
+
+                    if (collide)
+                    {
+                        return collide;
+                    }
+                }
+
+            }
+            return false;
+        }
+    };
 }
