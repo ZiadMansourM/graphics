@@ -69,7 +69,7 @@ namespace our
             //Detect collisions
 
             float dist = glm::length(otherPosition - playerPosition);
-            if (dist < collider->radius)
+            if (dist < 20)
             {
                 std::cout << "Collision detected" << std::endl;
             }

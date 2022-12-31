@@ -10,8 +10,8 @@ namespace our {
     class ColliderComponent: public Component {
     public:
 
-        glm::vec3 colliderCenter = { 0, 0, 0 };
-        float radius = 0.0f;
+        glm::vec3 size = { 0, 0, 0 };
+  
 
         // The ID of this component type is "Collider"
         static std::string getID() { return "Collider"; }
