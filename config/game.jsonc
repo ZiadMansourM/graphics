@@ -148,7 +148,8 @@
     },
     "world": [
       {
-        "position": [60, -5, 100],
+        "position": [50, -5, -175],
+        // "position": [60, -5, 100],
         "components": [
           {
             "type": "Camera"
@@ -417,6 +418,23 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+
+          {
+            "type": "Collider",
+            "size": [20.1, 12, 6]
+          }
+        ]
+      },
+      {
+        "position": [38, 0, -190], //Door
+        "rotation": [0, 0, 0],
+        "scale": [11, 10, 2],
+        "components": [
+          {
+            "type": "Mesh Renderer",
+            "mesh": "cube",
+            "material": "glass"
           },
 
           {

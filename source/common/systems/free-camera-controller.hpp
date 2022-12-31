@@ -107,6 +107,9 @@ namespace our
                 glm::vec3 posChange = { frontVec.x, 0.0, frontVec.z };
                 position += posChange;
 
+                // std::cout << "My pos: " << position.x << " " << position.y << " " << position.z << std::endl;
+                
+
                 bool collide = detectCollision(world, position);
                 if (collide)
                 {
@@ -246,13 +249,13 @@ namespace our
                     }
                     collide = collideX && collideY && collideZ;
 
-                    std::cout << "My pos: " << position.x << " " << position.y << " " << position.z << std::endl;
-                    std::cout << "Other pos: " << otherPosition.x << " " << otherPosition.y << " " << otherPosition.z << std::endl;
-                    std::cout << "Diff: " << absX << " " << absY << " " << absZ << std::endl;
-                    std::cout << "Other size: " << otherSize.x << " " << otherSize.y << " " << otherSize.z << std::endl;
-                    float dist = glm::length(otherPosition - position);
-                    std::cout << dist << " " << collide << std::endl;
-                    std::cout << "----------------------------" << std::endl;
+                    // std::cout << "My pos: " << position.x << " " << position.y << " " << position.z << std::endl;
+                    // std::cout << "Other pos: " << otherPosition.x << " " << otherPosition.y << " " << otherPosition.z << std::endl;
+                    // std::cout << "Diff: " << absX << " " << absY << " " << absZ << std::endl;
+                    // std::cout << "Other size: " << otherSize.x << " " << otherSize.y << " " << otherSize.z << std::endl;
+                    // float dist = glm::length(otherPosition - position);
+                    // std::cout << dist << " " << collide << std::endl;
+                    // std::cout << "----------------------------" << std::endl;
 
                     if (collide)
                     {
