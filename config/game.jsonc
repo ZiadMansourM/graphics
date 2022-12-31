@@ -194,6 +194,10 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+          {
+            "type": "Collider",
+            "size": [178, 12, 6]
           }
         ]
       },
@@ -207,6 +211,10 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+          {
+            "type": "Collider",
+            "size": [6, 12, 178]
           }
         ]
       },
@@ -220,6 +228,10 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+          {
+            "type": "Collider",
+            "size": [6, 12, 178]
           }
         ]
       },
@@ -233,6 +245,10 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+          {
+            "type": "Collider",
+            "size": [92, 12, 6]
           }
         ]
       },
@@ -246,6 +262,10 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+          {
+            "type": "Collider",
+            "size": [75, 12, 6]
           }
         ]
       },
@@ -259,6 +279,10 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+          {
+            "type": "Collider",
+            "size": [6, 12, 152]
           }
         ]
       },
@@ -272,6 +296,10 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+          {
+            "type": "Collider",
+            "size": [6, 12, 72]
           }
         ]
       },
@@ -285,12 +313,11 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+          {
+            "type": "Collider",
+            "size": [72, 12, 6]
           }
-          //Correct
-          //   {
-          //       "type": "Collider",
-          //       "size": [70, 10, 5.5]
-          //   }
         ]
       },
 
@@ -303,6 +330,10 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+          {
+            "type": "Collider",
+            "size": [72, 12, 6]
           }
         ]
       },
@@ -316,6 +347,10 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+          {
+            "type": "Collider",
+            "size": [6, 12, 37]
           }
         ]
       },
@@ -329,6 +364,10 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+          {
+            "type": "Collider",
+            "size": [6, 12, 37]
           }
         ]
       },
@@ -342,12 +381,11 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+          {
+            "type": "Collider",
+            "size": [6, 12, 47]
           }
-          //Correct
-          //   {
-          //     "type": "Collider",
-          //     "size": [8, 10, 47]
-          //   }
         ]
       },
 
@@ -359,9 +397,9 @@
           {
             "type": "Mesh Renderer",
             "mesh": "cube",
-            "material": "glass"
+            "material": "wall"
           },
-          //Correct
+
           {
             "type": "Collider",
             "size": [86, 12, 6]
@@ -378,12 +416,12 @@
             "type": "Mesh Renderer",
             "mesh": "cube",
             "material": "wall"
+          },
+
+          {
+            "type": "Collider",
+            "size": [20.1, 12, 6]
           }
-          // Correct
-          //   {
-          //     "type": "Collider",
-          //     "size": [20.1, 10, 6]
-          //   }
         ]
       }
     ]
