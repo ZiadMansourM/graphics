@@ -57,7 +57,7 @@ class Menustate: public our::State {
         menuMaterial->shader->link();
         // Then we load the menu texture
         menuMaterial->texture = our::texture_utils::loadImage("assets/textures/menu.png");
-        // Initially, the menu material will be black, then it will fade in
+            // Initially, the menu material will be black, then it will fade in
         menuMaterial->tint = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
 
         // Second, we create a material to highlight the hovered buttons
