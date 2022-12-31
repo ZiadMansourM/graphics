@@ -9,7 +9,7 @@ namespace our {
     {
         if (!data.is_object()) return;
 
-        colliderCenter = data.value("colliderCenter", colliderCenter);
-        radius = data.value("radius", radius);
+        size = data.value("size", size);
+        
     }
 }
