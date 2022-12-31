@@ -148,8 +148,8 @@
     },
     "world": [
       {
-        "position": [50, -5, -175],
-        // "position": [60, -5, 100],
+        // "position": [50, -5, -175], Next to exit
+        "position": [60, -5, 100],
         "components": [
           {
             "type": "Camera"
