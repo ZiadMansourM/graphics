@@ -16,7 +16,7 @@ void main()
 {		
 	vec2 uv = tex_coord;
 	//resolution of the screen
-	vec2 resolution = vec2(1024,1024);
+	vec2 resolution = vec2(1280,720);
 	//intensity of the fog effect
 	float intensity = 0.5;
 	//threshold of the fog effect
@@ -64,7 +64,7 @@ void main()
 	//mix is a function that blends two colors together
 	//blend the color of the fog effect with the color of the pixel
 	color = mix(color, texture(tex, uv), intensity);
-	
+
 	color = mix(color, vec4(1.0) - exp(-color * strength), intensity);
 
 	frag_color = color;
